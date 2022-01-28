@@ -1,25 +1,48 @@
-import logo from './logo.svg';
+import React from 'react';
+import SearchStock from './components/SearchStock';
+import DateSelectTile from './components/SelectDateRange';
+import StockTable from './components/StockTable';
+import StockGraph from './components/StockGraph';
 import './App.css';
+import SelectPriceType from './components/SelectPriceType';
 
-function App() {
+export default function App() {
+  const [startDate, setStartDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(startDate);
+  const [stockData, setStockData] = React.useState({});
+  const [selectedStocks, setSelectedStocks] = React.useState(new Set());
+  const [priceType, setPriceType] = React.useState('close');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SearchStock
+        startDate = {startDate}
+        endDate = {endDate}
+        setStockData = {setStockData}
+        stockData = {stockData}
+        selectedStocks = {selectedStocks}
+      />
+      <SelectPriceType
+        priceType = {priceType}
+        setPriceType = {setPriceType}
+      />
+      <DateSelectTile
+        startDate = {startDate}
+        endDate = {endDate}
+        setEndDate = {setEndDate}
+        setStartDate = {setStartDate}
+      />
+      <StockTable
+        stockData = {stockData}
+        setStockData = {setStockData}
+        selectedStocks = {selectedStocks}
+        setSelectedStocks = {setSelectedStocks}
+      />
+      <StockGraph
+        stockData = {stockData}
+        selectedStocks = {selectedStocks}
+        priceType = {priceType}
+      />
     </div>
-  );
+  )
 }
-
-export default App;
