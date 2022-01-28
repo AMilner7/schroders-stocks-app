@@ -2,22 +2,27 @@ export const tableColumns = [
   {
     name: "Symbol",
     selector: "id",
+    sortable: true,
   },
   {
     name: "Name",
     selector: "name",
+    sortable: true,
   },
   {
     name: 'Currency',
     selector: 'currency',
+    sortable: true,
   },
   {
     name: 'Industry',
     selector: 'industry',
+    sortable: true,
   },
   {
     name: 'Exchange',
     selector: 'exchange',
+    sortable: true,
   }
 ];
 

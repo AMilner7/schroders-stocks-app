@@ -1,76 +1,87 @@
-import React, { useEffect } from 'react';
+import { Box, TextField } from '@mui/material';
+import React, { useCallback, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { noStockPricesMessage, noStockProfileMessage } from '../config/messageConfig';
+import { inputTooLongMessage, noStockPricesMessage, noStockProfileMessage, onlyWordCharactersMessage } from '../config/messageConfig';
 import { getStockPrices, getStockProfile } from '../utils/finnhubUtil';
 
 export default function SearchStock(props) {
-    const [startDate, setStartDate] = React.useState(null);
-    const [endDate, setEndDate] = React.useState(null);
+    const [inputError, setInputError] = React.useState(false);
+    const [helperText, setHelperText] = React.useState(null);
+    const [searchStartDate, setSearchStartDate] = React.useState(props.startDate);
+    const [searchEndDate, setSearchEndDate] = React.useState(props.endDate);
 
+    const updateStockPrices = useCallback(async (symbol, stockProfile) => {
+        const stockPrices = await getStockPrices(symbol, props.startDate, props.endDate);
+        if (!stockPrices) {
+            toast(noStockPricesMessage);
+        } else {
+            const newStockData = { ...props.stockData }
+            if (stockProfile) {
+                newStockData[symbol] = { profile: { ...stockProfile } }
+            }
+            newStockData[symbol].prices = { ...stockPrices };
+            props.setStockData(newStockData);
+            return newStockData;
+        }
+    }, [props])
+    
     useEffect(() => {
-        if (props.startDate !== startDate || props.endDate !== endDate) {
-            const newTimeData = updateStockTimes();
-            newTimeData.then((data) => props.setStockData({ ...data }))
+        if (props.startDate !== searchStartDate || props.endDate !== searchEndDate) {
+            setSearchStartDate(props.startDate);
+            setSearchEndDate(props.endDate);
+            Object.keys(props.stockData).forEach((symbol) => updateStockPrices(symbol))
         }
-    })
+    }, [searchStartDate, searchEndDate, setSearchStartDate, setSearchEndDate, props, updateStockPrices])
 
-    async function updateStockTimes() {
-        let newTimeData = {}
-        for (let i = 0; i < Object.keys(props.stockData).length; i++) {
-            const updatedData = await updateStockPrices(Object.values(props.stockData)[i].profile, false);
-            newTimeData = {...newTimeData, ...updatedData};
-        }
-        return newTimeData;
-    }
-
-    async function getStock() {
-        const symbol = document.querySelector('.textbox-search').value.toUpperCase();
+    async function updateStockProfile(symbol) {
         const stockProfile = await getStockProfile(symbol);
         if (!stockProfile) {
             toast(noStockProfileMessage);
         } else {
-            return updateStockPrices(stockProfile);
+            const newStockData = { ...props.stockData };
+            newStockData[symbol] = { profile: { ...stockProfile}, prices: {} }
+            return updateStockPrices(symbol, stockProfile);
         }
     }
 
-    async function updateStockPrices(stockProfile, isSingleCall = true) {
-        setStartDate(props.startDate);
-        setEndDate(props.endDate);
-        const stockPrices = await getStockPrices(stockProfile.id, props.startDate, props.endDate);
-        if (!stockProfile) {
-            toast(noStockPricesMessage);
+    function handleChange(event) {
+        if (/\W/.test(event.target.value)) {
+            setHelperText(onlyWordCharactersMessage)
+            setInputError(true);
+        } else if (event.target.value.length > 4) {
+            setHelperText(inputTooLongMessage)
+            setInputError(true);
         } else {
-            const stockData = {}
-            stockData[stockProfile.id] = { profile: { ...stockProfile }, prices: { ...stockPrices } };
-            if (isSingleCall) {
-                props.setStockData({...props.stockData, ...stockData});
-            }
-            return stockData;
+            setHelperText(null);
+            setInputError(false);
         }
     }
 
-    function checkCanClickButton(typedValue) {
-        let searchButton = document.querySelector('.button-search');;
-        if (!typedValue || typedValue.length > 4) {
-            searchButton.disabled = true;
-        } else {
-            searchButton.disabled = false;
+    function handleSearch(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            updateStockProfile(String(event.target.value).toUpperCase());
         }
     }
 
     return (
         <div>
-            <h2>Search for Stock</h2>
-            <input
-                className='form-control textbox-search'
-                type='text'
-                placeholder='Stock Code (eg: MSFT)'
-                onKeyUp={(event) => checkCanClickButton(event.target.value)}
-            />
-            <button
-                className='button-search'
-                onClick={() => getStock()}
-            >Search</button>
+            <Box
+                component='form'
+                sx={{'& > :not(style)': { m: 1, width: '25ch'}}}
+                noValidate
+                autoComplete='off'
+                ><TextField
+                    id='outlined-basic'
+                    label='Stock Code (eg: MSFT)'
+                    variant='outlined'
+                    helperText={helperText}
+                    error={inputError}
+                    onChange={handleChange}
+                    onKeyDown={handleSearch}
+                    inputProps={{ style: { textTransform: 'uppercase' }}}
+                />
+            </Box>
             <Toaster />
         </div>
     )

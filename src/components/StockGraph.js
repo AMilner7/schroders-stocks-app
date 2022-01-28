@@ -32,7 +32,9 @@ export default function StockGraph(props) {
           const stock = props.stockData[symbol];
           timeRange.add(stock.prices.timeStamps);
       })
-      return [...timeRange][0].sort().map((time) => getDate(time));
+      const labels = [...timeRange][0].sort().map((time) => getDate(time));
+      console.log(labels)
+      return labels
     }
 
     function getDataSets() {
@@ -49,6 +51,8 @@ export default function StockGraph(props) {
     }
     if (props.selectedStocks.size) {
       setData({ labels: getLabels(props), datasets: getDataSets(props) })
+    } else {
+      setData(null)
     }
   }, [props])
 

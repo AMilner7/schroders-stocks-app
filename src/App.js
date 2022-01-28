@@ -7,11 +7,13 @@ import './App.css';
 import SelectPriceType from './components/SelectPriceType';
 
 export default function App() {
-  const [startDate, setStartDate] = React.useState(new Date());
+  const [startDate, setStartDate] = React.useState(new Date().getTime());
   const [endDate, setEndDate] = React.useState(startDate);
   const [stockData, setStockData] = React.useState({});
   const [selectedStocks, setSelectedStocks] = React.useState(new Set());
   const [priceType, setPriceType] = React.useState('close');
+
+  console.log(stockData)
 
   return (
     <div>
