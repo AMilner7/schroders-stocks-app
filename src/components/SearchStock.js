@@ -3,6 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { inputTooLongMessage, noStockPricesMessage, noStockProfileMessage, onlyWordCharactersMessage } from '../config/messageConfig';
 import { getStockPrices, getStockProfile } from '../utils/finnhubUtil';
+import Typography from '@mui/material/Typography';
 
 export default function SearchStock(props) {
     const [inputError, setInputError] = React.useState(false);
@@ -65,13 +66,15 @@ export default function SearchStock(props) {
     }
 
     return (
-        <div>
+        <div style={{padding: '10px'}}>
             <Box
                 component='form'
                 sx={{'& > :not(style)': { m: 1, width: '25ch'}}}
                 noValidate
                 autoComplete='off'
-                ><TextField
+                >
+                    <Typography style={{paddingLeft: '20px', margin: '0px'}}>Select your stock:</Typography>
+                    <TextField
                     id='outlined-basic'
                     label='Stock Code (eg: MSFT)'
                     variant='outlined'

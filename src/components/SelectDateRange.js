@@ -34,7 +34,7 @@ export default function DateSelectTile(props) {
     return (
         <div>
             <LocalizationProvider dateAdapter={DateAdapter}>
-            <Stack spacing={3} width='350'>
+            <Stack spacing={3} width='350' style={{paddingTop: '20px', paddingLeft: '0px'}}>
                 <DesktopDatePicker
                     label="Start Date"
                     inputFormat="MM/dd/yyyy"

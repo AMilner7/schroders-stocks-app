@@ -52,15 +52,31 @@ export default function StockTable(props) {
     }
   }
 
+  const customStyles = {
+    rows: {
+        style: {
+            minHeight: '72px', // override the row height
+        },
+    },
+    headCells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for head cells
+            paddingRight: '8px',
+        },
+    },
+    cells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for data cells
+            paddingRight: '8px',
+        },
+    },
+};
+
   return (
     <div>
       {Object.keys(props.stockData).length ?
       <div>
-        <Button
-          key='delete-button'
-          variant='contained'
-          onClick={deleteRows}
-        >Delete Selected Rows</Button>
+        <Button key='delete-button' variant='contained' onClick={deleteRows}>Delete Selected Rows</Button>
         <DataTable
           title="Available Stocks"
           columns={tableColumns}
@@ -69,6 +85,7 @@ export default function StockTable(props) {
           onRowClicked={handleRowClicked}
           sort
           conditionalRowStyles={conditionalRowStyles}
+          customStyles={customStyles}
         />
         <Toaster />
       </div> : <h2>No stocks added.</h2>}

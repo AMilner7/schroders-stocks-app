@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+#main {
+  overflow: hidden;
+  display: flex;
+}
+
+#main div {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 50%;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
