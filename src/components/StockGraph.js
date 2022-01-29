@@ -12,6 +12,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import { getDate } from '../utils/dateUtil';
 import { chartOptions, lineColors } from '../config/displayConfig';
+import '../styles/GraphStyles.css';
 
 ChartJS.register(
   CategoryScale,
@@ -59,7 +60,7 @@ export default function StockGraph(props) {
   return (
     <div>
       {data === null ?
-        <h2>No stocks to display.</h2> :
+        <p>No stocks to display.</p> :
         <Line options={chartOptions} data={data}/>}
     </div>
   );

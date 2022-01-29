@@ -76,14 +76,20 @@ export default function StockTable(props) {
     <div>
       {Object.keys(props.stockData).length ?
       <div>
-        <Button key='delete-button' variant='contained' onClick={deleteRows}>Delete Selected Rows</Button>
+        <Button
+          key='delete-button'
+          variant='outlined'
+          size='small'
+          onClick={deleteRows}>
+        Delete Rows</Button>
         <DataTable
-          title="Available Stocks"
           columns={tableColumns}
           highlightOnHover
           data={data}
           onRowClicked={handleRowClicked}
           sort
+          dense
+          fixedHeaderScrollHeight=''
           conditionalRowStyles={conditionalRowStyles}
           customStyles={customStyles}
         />

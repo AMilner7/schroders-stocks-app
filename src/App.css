@@ -1,51 +1,77 @@
-.App {
-  text-align: center;
+/* .card-container{
+  background-color: #272952;
 }
 
-#main {
-  overflow: hidden;
-  display: flex;
-}
-
-#main div {
-  flex-grow: 0;
-  flex-shrink: 0;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 50%;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.master-app-container {
+  height: 100vh;
+  padding: 20px;
+  background: #15103a;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.app-container-row {
+  height: 60%;
+  max-height: 415px;
+  overflow: hidden;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-container-container {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
 }
+
+.app-container-left {
+  width: calc(30% - 10px);
+  height: 100%;
+  max-height: 415px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.app-container-right {
+  height: 100%;
+  max-height: 415px;
+  width: calc(70% - 10px);
+  flex-direction: row;
+  display: flex;
+}
+
+.graph-row {
+  height: 100%;
+}
+
+.graph-col {
+  height: 100%;
+}
+
+.graph.card-container {
+  height: 100%;
+}
+
+@media(max-width:991px){
+  .app-container{
+      height: 100%;
+  }
+  .app-container-container{
+      flex-direction: column;
+  }
+  .app-container-row{
+      height: unset;
+      overflow: auto;
+      max-height: fit-content;
+  }
+  .app-container-left{
+      justify-content: unset;
+      overflow: auto;
+      width: 100%;
+  }
+  .app-container-right{
+      width: 100%;
+  }
+  .height-100{
+      height: 100%;
+  }
+} */
