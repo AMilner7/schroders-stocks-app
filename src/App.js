@@ -6,6 +6,7 @@ import StockGraph from './components/StockGraph';
 import SelectPriceType from './components/SelectPriceType';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import logo from './logo.png';
 
 export default function App() {
     const [endDate, setEndDate] = useState(new Date().getTime());
@@ -16,6 +17,7 @@ export default function App() {
 
     return (
         <div>
+            <img src={logo} alt="Logo" style={{ height: '2%' }} />
             <Grid
                 container
                 direction="column"
