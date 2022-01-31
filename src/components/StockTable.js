@@ -99,7 +99,7 @@ export default function StockTable(props) {
                 pointerOnHover
                 dense
                 fixedHeader
-                fixedHeaderScrollHeight="200px"
+                fixedHeaderScrollHeight="190px"
                 overflowY="hidden"
                 customStyles={customRowStyles}
                 conditionalRowStyles={conditionalRowStyles}

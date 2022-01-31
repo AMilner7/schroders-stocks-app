@@ -25,6 +25,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 export default function StockGraph(props) {
     const [data, setData] = useState(null);
+
     useEffect(() => {
         /**
          * Get data timeseries labels for display stocks.
@@ -74,12 +75,7 @@ export default function StockGraph(props) {
             }}
         >
             <Box sx={{ ...greyBox, height: '10%' }}>{graphTitle}</Box>
-            <Line
-                style={{ 'margin-left': '3%' }}
-                height="100%"
-                options={chartOptions}
-                data={data}
-            />
+            <Line style={{ marginLeft: '3%' }} height="100%" options={chartOptions} data={data} />
         </Grid>
     );
 }
