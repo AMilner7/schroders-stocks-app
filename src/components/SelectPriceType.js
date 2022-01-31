@@ -2,7 +2,6 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { priceTypeCodes } from '../config/finnhubConfig';
-import { ButtonGroup } from '@mui/material';
 
 export default function SelectPriceType(props) {
     
@@ -15,16 +14,27 @@ export default function SelectPriceType(props) {
 
     return (
         <div>
-            <Stack spacing={2} direction="row">
-                <ButtonGroup orientation='vertical'>
+            <Stack
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+            >
                 {priceTypeCodes.map((priceSettings) => 
                     <Button
                         key={`${priceSettings.priceCode}-button`}
                         variant='contained'
                         onClick={() => handleClick(priceSettings.priceCode)}
-                        color={currentPrice === priceSettings.priceCode ? 'success' : 'error'
-                    }>{priceSettings.displayName}</Button>)}
-                </ButtonGroup>
+                        sx={{
+                            width: '70%',
+                            backgroundColor: currentPrice === priceSettings.priceCode ? "#32a852": '#3287a8',
+                            ':hover': {
+                                bgcolor: '#1a4759',
+                                color: 'white',
+                            },
+                        }}
+                    >{priceSettings.displayName}</Button>)
+                }
             </Stack>
         </div>
     )

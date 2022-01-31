@@ -1,15 +1,15 @@
-import { Box, TextField } from '@mui/material';
+import { Box, Button, Grid, TextField } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { inputTooLongMessage, noStockPricesMessage, noStockProfileMessage, onlyWordCharactersMessage } from '../config/messageConfig';
+import { inputTooLongMessage, noStockPricesMessage, noStockProfileMessage, noValueToSearch, onlyWordCharactersMessage } from '../config/messageConfig';
 import { getStockPrices, getStockProfile } from '../utils/finnhubUtil';
-import Typography from '@mui/material/Typography';
 
 export default function SearchStock(props) {
     const [inputError, setInputError] = React.useState(false);
     const [helperText, setHelperText] = React.useState(null);
     const [searchStartDate, setSearchStartDate] = React.useState(props.startDate);
     const [searchEndDate, setSearchEndDate] = React.useState(props.endDate);
+    const [userInput, setUserInput] = React.useState('');
 
     const updateStockPrices = useCallback(async (symbol, stockProfile) => {
         const stockPrices = await getStockPrices(symbol, props.startDate, props.endDate);
@@ -46,45 +46,62 @@ export default function SearchStock(props) {
     }
 
     function handleChange(event) {
-        if (/\W/.test(event.target.value)) {
+        const inputText = String(event.target.value).toUpperCase()
+        if (/\W/.test(inputText)) {
             setHelperText(onlyWordCharactersMessage)
             setInputError(true);
-        } else if (event.target.value.length > 4) {
+        } else if (inputText.length > 4) {
             setHelperText(inputTooLongMessage)
             setInputError(true);
         } else {
             setHelperText(null);
             setInputError(false);
         }
+        if (!inputError) {
+            setUserInput(inputText)
+        }
     }
 
     function handleSearch(event) {
         if (event.keyCode === 13) {
-            event.preventDefault();
-            updateStockProfile(String(event.target.value).toUpperCase());
+            if (!userInput) {
+                toast(noValueToSearch);
+            } else if (!inputError) {
+                event.preventDefault();
+                updateStockProfile(userInput);
+            }
         }
     }
 
     return (
-        <div style={{padding: '10px'}}>
-            <Box
-                component='form'
-                sx={{'& > :not(style)': { m: 1, width: '25ch'}}}
-                noValidate
-                autoComplete='off'
-                >
-                    <Typography style={{paddingLeft: '20px', margin: '0px'}}>Select your stock:</Typography>
+        <div>
+            <Grid container direction='row' justifyContent='flex-start'>
+                <Box sx={{width: '75%', marginRight: '5%'}}>
                     <TextField
-                    id='outlined-basic'
-                    label='Stock Code (eg: MSFT)'
-                    variant='outlined'
-                    helperText={helperText}
-                    error={inputError}
-                    onChange={handleChange}
-                    onKeyDown={handleSearch}
-                    inputProps={{ style: { textTransform: 'uppercase' }}}
-                />
-            </Box>
+                        id='outlined-basic'
+                        label='Search for Stock (eg: MSFT)'
+                        variant='outlined'
+                        helperText={helperText}
+                        error={inputError}
+                        onChange={handleChange}
+                        onKeyDown={handleSearch}
+                        inputProps={{ style: { textTransform: 'uppercase' }}}
+                        sx={{width: '100%' }}
+                    />
+                </Box>
+                <Box sx={{width: '20%'}}>
+                    <Button
+                        onClick={() => updateStockProfile(userInput)}
+                        disabled={inputError} key='search-button' variant='contained' sx={{
+                        width: '100%',
+                        backgroundColor: '#3287a8',
+                        ':hover': {
+                            bgcolor: '#1a4759',
+                            color: 'white',
+                        },
+                    }}>SEARCH</Button>
+                </Box>
+            </Grid>
             <Toaster />
         </div>
     )

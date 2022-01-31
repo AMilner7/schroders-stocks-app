@@ -1,8 +1,8 @@
-import { Button } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import toast, { Toaster } from 'react-hot-toast';
-import { conditionalRowStyles, tableColumns } from '../config/displayConfig';
+import { conditionalRowStyles, customRowStyles, tableColumns } from '../config/displayConfig';
 import { maxDisplayMessage, noSelectedStocksToDeleteMessage } from '../config/messageConfig';
 
 export default function StockTable(props) {
@@ -52,49 +52,54 @@ export default function StockTable(props) {
     }
   }
 
-  const customStyles = {
-    rows: {
-        style: {
-            minHeight: '72px', // override the row height
-        },
-    },
-    headCells: {
-        style: {
-            paddingLeft: '8px', // override the cell padding for head cells
-            paddingRight: '8px',
-        },
-    },
-    cells: {
-        style: {
-            paddingLeft: '8px', // override the cell padding for data cells
-            paddingRight: '8px',
-        },
-    },
-};
-
   return (
-    <div>
-      {Object.keys(props.stockData).length ?
-      <div>
+      Object.keys(props.stockData).length ?
+      <Box sx={{width:'100%'}}>
         <Button
           key='delete-button'
-          variant='outlined'
           size='small'
-          onClick={deleteRows}>
-        Delete Rows</Button>
-        <DataTable
-          columns={tableColumns}
-          highlightOnHover
-          data={data}
-          onRowClicked={handleRowClicked}
-          sort
-          dense
-          fixedHeaderScrollHeight=''
-          conditionalRowStyles={conditionalRowStyles}
-          customStyles={customStyles}
-        />
+          onClick={deleteRows}
+          sx={{height: '100%',
+            backgroundColor: '#e81005',
+            color: 'white',
+            ':hover': {
+              bgcolor: '#1a4759',
+              color: 'white',
+            }
+          }}
+        >
+          Delete Selected Rows
+        </Button>
+          <DataTable
+            columns={tableColumns}
+            highlightOnHover
+            data={data}
+            onRowClicked={handleRowClicked}
+            sort
+            pointerOnHover
+            dense
+            fixedHeader
+            fixedHeaderScrollHeight='200px'
+            overflowY='hidden'
+            customStyles={customRowStyles}
+            conditionalRowStyles={conditionalRowStyles}
+          />
         <Toaster />
-      </div> : <h2>No stocks added.</h2>}
-    </div>
+      </Box> : <Grid sx={{alignItems:'center', justifyContent:"center", display: 'flex'}}>
+      <Box
+        sx={{
+          m: 2,
+          p: 1,
+          display: 'inline-flex',
+          color: 'black',
+          border: '1px solid',
+          borderColor: '#d5e6ed',
+          backgroundColor: '#d5e6ed',
+          borderRadius: 2,
+          fontSize: '0.875rem',
+          fontWeight: '700',
+        }}
+      >No stocks added to table.</Box>
+    </Grid>
   );
 }

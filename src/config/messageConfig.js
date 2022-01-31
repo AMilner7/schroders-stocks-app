@@ -15,3 +15,5 @@ export const noSelectedStocksToDeleteMessage = 'No selected stocks to delete!';
 export const onlyWordCharactersMessage = 'Stock symbol must only contain word characters';
 
 export const inputTooLongMessage = 'Stock symbol must be 4 characters or less';
+
+export const noValueToSearch = 'Must provide a value to search for stocks';
