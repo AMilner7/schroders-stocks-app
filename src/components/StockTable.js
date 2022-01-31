@@ -1,12 +1,18 @@
 import { Box, Button, Grid } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import toast, { Toaster } from 'react-hot-toast';
-import { conditionalRowStyles, customRowStyles, tableColumns } from '../config/displayConfig';
+import {
+    conditionalRowStyles,
+    customRowStyles,
+    noTableDefaultMessage,
+    tableColumns,
+} from '../config/displayConfig';
 import { maxDisplayMessage, noSelectedStocksToDeleteMessage } from '../config/messageConfig';
+import { buttonDefaults, centerAlignment, greyBox, red } from '../config/styleConfig';
 
 export default function StockTable(props) {
-    const [data, setData] = React.useState([]);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         setData(
@@ -19,9 +25,29 @@ export default function StockTable(props) {
         );
     }, [props.stockData]);
 
+    /**
+     * Toggle stock selection for data table and graph displays.
+     * @param {any} row - Selected row
+     */
     function handleRowClicked(row) {
         let selectedStocks = new Set();
         const updatedData = { ...props.stockData };
+        updateSelectedRow(row, updatedData, selectedStocks);
+        if (selectedStocks.size > 3) {
+            toast(maxDisplayMessage);
+        } else {
+            props.setSelectedStocks(selectedStocks);
+        }
+        props.setStockData(updatedData);
+    }
+
+    /**
+     * Updates selected row toggle.
+     * @param {any} row - Selected row
+     * @param {any} updatedData - Row data to be updated
+     * @param {Set} selectedStocks - Current selected stocks
+     */
+    function updateSelectedRow(row, updatedData, selectedStocks) {
         Object.keys(props.stockData).forEach((symbol) => {
             const stock = props.stockData[symbol];
             let toggleSelected = stock.toggleSelected;
@@ -35,14 +61,11 @@ export default function StockTable(props) {
             }
             updatedData[symbol] = { ...stock, toggleSelected };
         });
-        if (selectedStocks.size > 3) {
-            toast(maxDisplayMessage);
-        } else {
-            props.setSelectedStocks(selectedStocks);
-        }
-        props.setStockData(updatedData);
     }
 
+    /**
+     * Delete selected rows amd update stockData.
+     */
     function deleteRows() {
         let updatedStockData = Object.assign({}, props.stockData);
         if (props.selectedStocks.size) {
@@ -61,13 +84,8 @@ export default function StockTable(props) {
                 size="small"
                 onClick={deleteRows}
                 sx={{
-                    height: '100%',
-                    backgroundColor: '#e81005',
-                    color: 'white',
-                    ':hover': {
-                        bgcolor: '#1a4759',
-                        color: 'white',
-                    },
+                    ...buttonDefaults,
+                    backgroundColor: red,
                 }}
             >
                 Delete Selected Rows
@@ -89,23 +107,8 @@ export default function StockTable(props) {
             <Toaster />
         </Box>
     ) : (
-        <Grid sx={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-            <Box
-                sx={{
-                    m: 2,
-                    p: 1,
-                    display: 'inline-flex',
-                    color: 'black',
-                    border: '1px solid',
-                    borderColor: '#d5e6ed',
-                    backgroundColor: '#d5e6ed',
-                    borderRadius: 2,
-                    fontSize: '0.875rem',
-                    fontWeight: '700',
-                }}
-            >
-                No stocks added to table.
-            </Box>
+        <Grid sx={centerAlignment}>
+            <Box sx={greyBox}>{noTableDefaultMessage}</Box>
         </Grid>
     );
 }

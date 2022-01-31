@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import {
     inputTooLongMessage,
@@ -11,13 +11,18 @@ import {
 import { getStockPrices, getStockProfile } from '../utils/finnhubUtil';
 
 export default function SearchStock(props) {
-    const [inputError, setInputError] = React.useState(false);
-    const [helperText, setHelperText] = React.useState(null);
-    const [searchStartDate, setSearchStartDate] = React.useState(props.startDate);
-    const [searchEndDate, setSearchEndDate] = React.useState(props.endDate);
-    const [userInput, setUserInput] = React.useState('');
-
+    const [inputError, setInputError] = useState(false);
+    const [helperText, setHelperText] = useState(null);
+    const [searchStartDate, setSearchStartDate] = useState(props.startDate);
+    const [searchEndDate, setSearchEndDate] = useState(props.endDate);
+    const [userInput, setUserInput] = useState('');
     const updateStockPrices = useCallback(
+        /**
+         * Updates stockData for new date range selection.
+         * @param {string} symbol - Stock symbol
+         * @param {any} stockProfile - Stock profile data
+         * @returns Updated stock data
+         */
         async (symbol, stockProfile) => {
             const stockPrices = await getStockPrices(symbol, props.startDate, props.endDate);
             if (!stockPrices) {
@@ -50,6 +55,11 @@ export default function SearchStock(props) {
         updateStockPrices,
     ]);
 
+    /**
+     * Update stock prices for selected date range.
+     * @param {string} symbol - Stock symbol
+     * @returns Updated stock prices and profile data
+     */
     async function updateStockProfile(symbol) {
         const stockProfile = await getStockProfile(symbol);
         if (!stockProfile) {
@@ -61,6 +71,10 @@ export default function SearchStock(props) {
         }
     }
 
+    /**
+     * Validate user input can be used.
+     * @param {KeyboardEvent} event - User input
+     */
     function handleChange(event) {
         const inputText = String(event.target.value).toUpperCase();
         if (/\W/.test(inputText)) {
@@ -78,6 +92,10 @@ export default function SearchStock(props) {
         }
     }
 
+    /**
+     * Trigger search when user presses enter.
+     * @param {KeyboardEvent} event - User input
+     */
     function handleSearch(event) {
         if (event.keyCode === 13) {
             if (!userInput) {

@@ -12,6 +12,10 @@ import {
 } from '../config/messageConfig';
 
 export default function DateSelectTile(props) {
+    /**
+     * Validates start date.
+     * @param {Date} newDate - User selected date
+     */
     function handleStartDate(newDate) {
         if (newDate > new Date()) {
             toast(dateInFutureMessage);
@@ -23,6 +27,10 @@ export default function DateSelectTile(props) {
         }
     }
 
+    /**
+     * Validates end date.
+     * @param {Date} newDate - User selected date
+     */
     function handleEndDate(newDate) {
         if (newDate > new Date()) {
             toast(dateInFutureMessage);

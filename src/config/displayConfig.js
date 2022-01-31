@@ -1,3 +1,5 @@
+import { darkBlue, green, grey, red } from './styleConfig';
+
 export const defaultSearchTitle = 'Search for Stock';
 
 export const tableColumns = [
@@ -37,7 +39,7 @@ export const conditionalRowStyles = [
     {
         when: (row) => row.toggleSelected,
         style: {
-            backgroundColor: '#32a852',
+            backgroundColor: green,
             userSelect: 'none',
         },
     },
@@ -50,35 +52,20 @@ export const chartOptions = {
             position: 'top',
         },
     },
-    text: {
-        primary: '#d5e6ed',
-    },
-    // title: {
-    //   display: true,
-    //   text: 'Stock Prices (USD)',
-    // },
 };
 
 export const lineColors = [
     {
-        color: 'g',
-        line: '#da534d',
-        border: '#faa39f',
+        line: red,
+        border: red,
     },
     {
-        color: 'b',
-        line: '#007790',
-        border: '#69dbf1',
+        line: green,
+        border: green,
     },
     {
-        color: 'r',
-        line: '#009872',
-        border: '#69f2d0',
-    },
-    {
-        color: 'y',
-        line: '#F1C232',
-        border: '#FFD966',
+        line: darkBlue,
+        border: darkBlue,
     },
 ];
 
@@ -86,7 +73,7 @@ export const customRowStyles = {
     rows: {
         style: {
             maxHeight: '72px',
-            backgroundColor: '#d5e6ed',
+            backgroundColor: grey,
         },
     },
     headCells: {
@@ -101,3 +88,9 @@ export const customRowStyles = {
         },
     },
 };
+
+export const graphTitle = 'Stock Prices (USD)';
+
+export const noGraphDefaultMessage = 'No stocks selected from table to display.';
+
+export const noTableDefaultMessage = 'No stocks added to table.';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchStock from './components/SearchStock';
 import DateSelectTile from './components/SelectDateRange';
 import StockTable from './components/StockTable';
@@ -8,14 +8,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 export default function App() {
-    const [endDate, setEndDate] = React.useState(new Date().getTime());
-    const [startDate, setStartDate] = React.useState(endDate - 4 * 24 * 60 * 60 * 1000);
-
-    const [stockData, setStockData] = React.useState({});
-    const [selectedStocks, setSelectedStocks] = React.useState(new Set());
-    const [priceType, setPriceType] = React.useState('close');
-
-    console.log(stockData);
+    const [endDate, setEndDate] = useState(new Date().getTime());
+    const [startDate, setStartDate] = useState(endDate - 4 * 24 * 60 * 60 * 1000);
+    const [stockData, setStockData] = useState({});
+    const [selectedStocks, setSelectedStocks] = useState(new Set());
+    const [priceType, setPriceType] = useState('close');
 
     return (
         <div>

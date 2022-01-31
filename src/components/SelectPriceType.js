@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { priceTypeCodes } from '../config/finnhubConfig';
+import { buttonDefaults, green, lightBlue } from '../config/styleConfig';
 
 export default function SelectPriceType(props) {
-    const [currentPrice, setCurrentPrice] = React.useState(props.priceType);
+    const [currentPrice, setCurrentPrice] = useState(props.priceType);
 
+    /**
+     * Set the global price type when user selects price.
+     * @param {string} selectedPrice - Selected price type
+     */
     function handleClick(selectedPrice) {
         setCurrentPrice(selectedPrice);
         props.setPriceType(selectedPrice);
@@ -21,12 +26,9 @@ export default function SelectPriceType(props) {
                         onClick={() => handleClick(priceSettings.priceCode)}
                         sx={{
                             width: '70%',
+                            ...buttonDefaults,
                             backgroundColor:
-                                currentPrice === priceSettings.priceCode ? '#32a852' : '#3287a8',
-                            ':hover': {
-                                bgcolor: '#1a4759',
-                                color: 'white',
-                            },
+                                currentPrice === priceSettings.priceCode ? green : lightBlue,
                         }}
                     >
                         {priceSettings.displayName}
