@@ -6,6 +6,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm ci`
+
+Installs `node_module` dependencies using `package-lock`.
+
+### `npm run lint`
+
+Runs `es-lint` code format checks.\
+To automatically fix issues, run `npm run lint:fix`.
+
 ### `npm start`
 
 Runs the app in the development mode.\

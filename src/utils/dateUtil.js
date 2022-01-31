@@ -1,9 +1,9 @@
 /**
  * Returns date of date string.
- * @param {string} dateString 
+ * @param {string} dateString
  * @returns Date as DD-MM-YYYY
  */
- export function getDate(dateString) {
+export function getDate(dateString) {
     const date = new Date(dateString);
     const dd = date.getDate();
     const mm = date.toLocaleDateString('default', { month: 'short' });

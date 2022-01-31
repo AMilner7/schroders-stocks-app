@@ -5,10 +5,13 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import toast, { Toaster } from 'react-hot-toast';
-import { dateInFutureMessage, invalidEndDateMessage, invalidStartDateMessage } from '../config/messageConfig';
+import {
+    dateInFutureMessage,
+    invalidEndDateMessage,
+    invalidStartDateMessage,
+} from '../config/messageConfig';
 
 export default function DateSelectTile(props) {
-
     function handleStartDate(newDate) {
         if (newDate > new Date()) {
             toast(dateInFutureMessage);
@@ -34,22 +37,22 @@ export default function DateSelectTile(props) {
     return (
         <div>
             <LocalizationProvider dateAdapter={DateAdapter}>
-            <Stack spacing={3}>
-                <DesktopDatePicker
-                    label="Start Date"
-                    inputFormat="MM/dd/yyyy"
-                    value={props.startDate}
-                    onChange={handleStartDate}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-                <DesktopDatePicker
-                    label="End Date"
-                    inputFormat="MM/dd/yyyy"
-                    value={props.endDate}
-                    onChange={handleEndDate}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-            </Stack>
+                <Stack spacing={3}>
+                    <DesktopDatePicker
+                        label="Start Date"
+                        inputFormat="MM/dd/yyyy"
+                        value={props.startDate}
+                        onChange={handleStartDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                    <DesktopDatePicker
+                        label="End Date"
+                        inputFormat="MM/dd/yyyy"
+                        value={props.endDate}
+                        onChange={handleEndDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </Stack>
             </LocalizationProvider>
             <Toaster />
         </div>

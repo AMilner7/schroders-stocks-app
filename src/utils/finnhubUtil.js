@@ -17,7 +17,7 @@ function finnhubClient() {
  */
 export async function getStockProfile(symbol) {
     const stockProfile = await finnhubClient().get(extensions.profileSearch, {
-        params: { symbol, token }
+        params: { symbol, token },
     });
     if (!Object.keys(stockProfile.data).length) {
         return null;
@@ -47,7 +47,7 @@ export async function getStockPrices(symbol, startDate, endDate) {
             resolution: 'D',
             from: getSearchTime(startDate),
             to: getSearchTime(endDate),
-        }
+        },
     });
     if (stockPrices.data.s === 'no_data') {
         return null;
