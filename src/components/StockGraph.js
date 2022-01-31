@@ -36,9 +36,7 @@ export default function StockGraph(props) {
                 const stock = props.stockData[symbol];
                 timeRange.add(stock.prices.timeStamps);
             });
-            const labels = [...timeRange][0].sort().map((time) => getDate(time));
-            console.log(labels);
-            return labels;
+            return [...timeRange][0].sort().map((time) => getDate(time));
         }
 
         /**

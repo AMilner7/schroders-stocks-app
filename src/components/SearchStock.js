@@ -16,6 +16,8 @@ export default function SearchStock(props) {
     const [searchStartDate, setSearchStartDate] = useState(props.startDate);
     const [searchEndDate, setSearchEndDate] = useState(props.endDate);
     const [userInput, setUserInput] = useState('');
+    const [stocksInDateRange, setStocksInDateRange] = useState(new Set());
+
     const updateStockPrices = useCallback(
         /**
          * Updates stockData for new date range selection.
@@ -42,9 +44,17 @@ export default function SearchStock(props) {
 
     useEffect(() => {
         if (props.startDate !== searchStartDate || props.endDate !== searchEndDate) {
+            setStocksInDateRange(new Set());
             setSearchStartDate(props.startDate);
             setSearchEndDate(props.endDate);
-            Object.keys(props.stockData).forEach((symbol) => updateStockPrices(symbol));
+        }
+        if (props.selectedStocks.size) {
+            [...props.selectedStocks].forEach((symbol) => {
+                if (!stocksInDateRange.has(symbol)) {
+                    stocksInDateRange.add(symbol);
+                    updateStockPrices(symbol);
+                }
+            });
         }
     }, [
         searchStartDate,
