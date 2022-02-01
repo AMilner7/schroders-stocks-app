@@ -5,10 +5,19 @@
  */
 export function getDate(dateString) {
     const date = new Date(dateString);
-    const dd = date.getDate();
+    const dd = getPaddedTime(date.getDate());
     const mm = date.toLocaleDateString('default', { month: 'short' });
     const yyyy = date.getFullYear();
     return `${dd}-${mm}-${yyyy}`;
+}
+
+/**
+ * Add leading 0 to display times.
+ * @param {number} time - Time to add padding
+ * @returns Padded display time
+ */
+function getPaddedTime(time) {
+    return (time < 10 ? '0' : '') + time;
 }
 
 /**
