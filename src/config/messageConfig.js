@@ -17,3 +17,7 @@ export const onlyWordCharactersMessage = 'Stock symbol must only contain word ch
 export const inputTooLongMessage = 'Stock symbol must be 4 characters or less';
 
 export const noValueToSearch = 'Must provide a value to search for stocks';
+
+export const mavgNotValidMessage = 'Moving average days cannot be more than current date range';
+
+export const mavgCannotBeZeroMessage = 'Moving average days cannot be less than 1';

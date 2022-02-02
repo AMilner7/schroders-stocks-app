@@ -4,6 +4,8 @@ export const defaultSearchTitle = 'Search for Stock';
 
 export const inputTextPrompt = 'Search for Stock (eg: MSFT)';
 
+export const movingAvgPrompt = 'MAVG Days';
+
 export const tableColumns = [
     {
         name: 'Symbol',

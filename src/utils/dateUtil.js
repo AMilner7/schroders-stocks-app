@@ -28,3 +28,13 @@ function getPaddedTime(time) {
 export function getSearchTime(dateTime) {
     return Math.round(dateTime / 1000);
 }
+
+/**
+ * Return number of days between start and end dates.
+ * @param {number} startDate - Start date
+ * @param {number} endDate - End date
+ * @returns Days inbetween
+ */
+export function getDayRange(startDate, endDate) {
+    return Math.round((endDate - startDate) / (24 * 60 * 60 * 1000));
+}

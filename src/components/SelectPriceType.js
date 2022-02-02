@@ -3,6 +3,11 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { priceTypeCodes } from '../config/finnhubConfig';
 import { buttonDefaults, green, lightBlue } from '../config/styleConfig';
+import { TextField } from '@mui/material';
+import toast, { Toaster } from 'react-hot-toast';
+import { movingAvgPrompt } from '../config/displayConfig';
+import { getDayRange } from '../utils/dateUtil';
+import { mavgCannotBeZeroMessage, mavgNotValidMessage } from '../config/messageConfig';
 
 export default function SelectPriceType(props) {
     const [currentPrice, setCurrentPrice] = useState(props.priceType);
@@ -16,9 +21,34 @@ export default function SelectPriceType(props) {
         props.setPriceType(selectedPrice);
     }
 
+    /**
+     * Set the moving average days.
+     * @param {KeyboardEvent} event - User input
+     */
+    function handleChange(event) {
+        const dayRange = getDayRange(props.startDate, props.endDate);
+        if (dayRange < event.target.value) {
+            toast(mavgNotValidMessage);
+        } else if (event.target.value <= 0) {
+            toast(mavgCannotBeZeroMessage);
+        } else {
+            props.setMovingAvgDays(event.target.value);
+        }
+    }
+
     return (
         <div>
             <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                <TextField
+                    id="input-mavg"
+                    type="number"
+                    label={movingAvgPrompt}
+                    defaultValue={props.movingAvgDays}
+                    variant="outlined"
+                    onChange={handleChange}
+                    sx={{ width: '70%' }}
+                    data-testid="input-mavg"
+                />
                 {priceTypeCodes.map((priceSettings) => (
                     <Button
                         key={`${priceSettings.priceCode}-button`}
@@ -35,6 +65,7 @@ export default function SelectPriceType(props) {
                     </Button>
                 ))}
             </Stack>
+            <Toaster />
         </div>
     );
 }

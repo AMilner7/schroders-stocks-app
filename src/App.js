@@ -9,12 +9,12 @@ import Grid from '@mui/material/Grid';
 import logo from './logo.png';
 
 export default function App() {
+    const [movingAvgDays, setMovingAvgDays] = useState(3);
     const [endDate, setEndDate] = useState(new Date().getTime());
-    const [startDate, setStartDate] = useState(endDate - 4 * 24 * 60 * 60 * 1000);
+    const [startDate, setStartDate] = useState(endDate - (movingAvgDays + 1) * 24 * 60 * 60 * 1000);
     const [stockData, setStockData] = useState({});
     const [selectedStocks, setSelectedStocks] = useState(new Set());
     const [priceType, setPriceType] = useState('close');
-    const [movingAvgDays] = useState(3);
 
     return (
         <div>
@@ -47,7 +47,14 @@ export default function App() {
                         </Box>
                     </Box>
                     <Box sx={{ width: '10%' }}>
-                        <SelectPriceType priceType={priceType} setPriceType={setPriceType} />
+                        <SelectPriceType
+                            startDate={startDate}
+                            endDate={endDate}
+                            movingAvgDays={movingAvgDays}
+                            setMovingAvgDays={setMovingAvgDays}
+                            priceType={priceType}
+                            setPriceType={setPriceType}
+                        />
                     </Box>
                     <Box sx={{ width: '60%' }}>
                         <StockTable
