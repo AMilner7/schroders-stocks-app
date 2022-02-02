@@ -12,10 +12,11 @@ Installs `node_module` dependencies using `package-lock`.
 
 ### `npm run lint`
 
-Runs `es-lint` code format checks.\
-To automatically fix issues, run `npm run lint:fix`.
+Runs [`eslint`](https://eslint.org/) code format checks.\
+Integrates basic SonarJS checks with [`eslint-plugin-sonarjs`](https://www.npmjs.com/package/eslint-plugin-sonarjs).\
+*To automatically fix issues, run `npm run lint:fix`.*
 
-### `npm start`
+### `npm run start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -23,10 +24,15 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+### `npm run test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs unit tests on both `src/components/` and `src/utils/` using [`jest`](https://jestjs.io/).\
+Component and FE unit tests use the [`@testing-library/react`](https://testing-library.com/) framework.
+
+### `npm run test:ci`
+
+For CI and dev frameworks. Runs lint and unit tests.
+
 
 ### `npm run build`
 
@@ -48,32 +54,9 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Development
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+[`Husky`](https://typicode.github.io/husky/#/) is used to maintain `git hooks`, including `pre-commit` and `pre-push`.
+- When users commit new changes, `lint:fix` will run.
+- Users cannot push commits unless `test:ci` passes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
