@@ -2,6 +2,8 @@ import { darkBlue, green, grey, red } from './styleConfig';
 
 export const defaultSearchTitle = 'Search for Stock';
 
+export const inputTextPrompt = 'Search for Stock (eg: MSFT)';
+
 export const tableColumns = [
     {
         name: 'Symbol',

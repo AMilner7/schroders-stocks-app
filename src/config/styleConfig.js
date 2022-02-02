@@ -14,7 +14,6 @@ export const buttonDefaults = {
         bgcolor: darkBlue,
         color: 'white',
     },
-    height: '100%',
 };
 
 export const greyBox = {

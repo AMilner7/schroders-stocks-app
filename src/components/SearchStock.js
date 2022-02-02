@@ -1,6 +1,7 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
-import React, { useState, useCallback, useEffect } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useState, useEffect } from 'react';
+const { Toaster, toast } = require('react-hot-toast');
+import { inputTextPrompt } from '../config/displayConfig';
 import {
     inputTooLongMessage,
     noStockPricesMessage,
@@ -8,6 +9,7 @@ import {
     noValueToSearch,
     onlyWordCharactersMessage,
 } from '../config/messageConfig';
+import { buttonDefaults, lightBlue } from '../config/styleConfig';
 import { getStockPrices, getStockProfile } from '../utils/finnhubUtil';
 
 export default function SearchStock(props) {
@@ -18,29 +20,26 @@ export default function SearchStock(props) {
     const [userInput, setUserInput] = useState('');
     const [stocksInDateRange, setStocksInDateRange] = useState(new Set());
 
-    const updateStockPrices = useCallback(
-        /**
-         * Updates stockData for new date range selection.
-         * @param {string} symbol - Stock symbol
-         * @param {any} stockProfile - Stock profile data
-         * @returns Updated stock data
-         */
-        async (symbol, stockProfile) => {
-            const stockPrices = await getStockPrices(symbol, props.startDate, props.endDate);
-            if (!stockPrices) {
-                toast(noStockPricesMessage);
-            } else {
-                const newStockData = { ...props.stockData };
-                if (stockProfile) {
-                    newStockData[symbol] = { profile: { ...stockProfile } };
-                }
-                newStockData[symbol].prices = { ...stockPrices };
-                props.setStockData(newStockData);
-                return newStockData;
+    /**
+     * Updates stockData for new date range selection.
+     * @param {string} symbol - Stock symbol
+     * @param {any} stockProfile - Stock profile data
+     * @returns Updated stock data
+     */
+    const updateStockPrices = async (symbol, profile) => {
+        const stockPrices = await getStockPrices(symbol, props.startDate, props.endDate);
+        if (!stockPrices) {
+            toast(noStockPricesMessage);
+        } else {
+            const newStockData = { ...props.stockData };
+            if (profile) {
+                newStockData[symbol] = { profile };
             }
-        },
-        [props]
-    );
+            newStockData[symbol].prices = { ...stockPrices };
+            props.setStockData(newStockData);
+            return newStockData;
+        }
+    };
 
     useEffect(() => {
         if (props.startDate !== searchStartDate || props.endDate !== searchEndDate) {
@@ -56,14 +55,7 @@ export default function SearchStock(props) {
                 }
             });
         }
-    }, [
-        searchStartDate,
-        searchEndDate,
-        setSearchStartDate,
-        setSearchEndDate,
-        props,
-        updateStockPrices,
-    ]);
+    }, [searchStartDate, searchEndDate, props]);
 
     /**
      * Update stock prices for selected date range.
@@ -107,7 +99,7 @@ export default function SearchStock(props) {
      * @param {KeyboardEvent} event - User input
      */
     function handleSearch(event) {
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
             if (!userInput) {
                 toast(noValueToSearch);
             } else if (!inputError) {
@@ -122,8 +114,8 @@ export default function SearchStock(props) {
             <Grid container direction="row" justifyContent="flex-start">
                 <Box sx={{ width: '75%', marginRight: '5%' }}>
                     <TextField
-                        id="outlined-basic"
-                        label="Search for Stock (eg: MSFT)"
+                        id="input-text"
+                        label={inputTextPrompt}
                         variant="outlined"
                         helperText={helperText}
                         error={inputError}
@@ -131,22 +123,21 @@ export default function SearchStock(props) {
                         onKeyDown={handleSearch}
                         inputProps={{ style: { textTransform: 'uppercase' } }}
                         sx={{ width: '100%' }}
+                        data-testid="input-text"
                     />
                 </Box>
                 <Box sx={{ width: '20%' }}>
                     <Button
                         onClick={() => updateStockProfile(userInput)}
-                        disabled={inputError}
+                        disabled={inputError || !userInput}
                         key="search-button"
                         variant="contained"
                         sx={{
                             width: '100%',
-                            backgroundColor: '#3287a8',
-                            ':hover': {
-                                bgcolor: '#1a4759',
-                                color: 'white',
-                            },
+                            backgroundColor: lightBlue,
+                            ...buttonDefaults,
                         }}
+                        data-testid="search-button"
                     >
                         SEARCH
                     </Button>

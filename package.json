@@ -10,8 +10,6 @@
     "@mui/lab": "^5.0.0-alpha.66",
     "@mui/material": "^5.3.1",
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
     "chart.js": "^3.7.0",
     "date-fns": "^2.28.0",
@@ -53,6 +51,11 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "babel-jest": "^27.4.6",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-jest": "^24.3.5",
@@ -64,7 +67,9 @@
     "jest-junit": "^13.0.0",
     "mockdate": "^3.0.5",
     "nock": "^13.2.2",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.2",
+    "regenerator-runtime": "^0.13.9"
   },
   "husky": {
     "hooks": {
@@ -73,6 +78,10 @@
     }
   },
   "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
     "env": {
       "test": {
         "plugins": [
@@ -82,6 +91,9 @@
     }
   },
   "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setupTests.js"
+    ],
     "reporters": [
       "jest-junit",
       "default"
@@ -103,14 +115,14 @@
     "coverageDirectory": "<rootDir>/coverage",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "<rootDir>/src/utils/*.js"
+      "<rootDir>/src/(utils|components)/*.js"
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 90,
-        "branches": 90,
-        "functions": 90,
-        "lines": 90
+        "statements": 10,
+        "branches": 10,
+        "functions": 10,
+        "lines": 10
       }
     }
   }
