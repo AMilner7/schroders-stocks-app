@@ -1,8 +1,5 @@
-import { extensions, token } from '../../../src/config/finnhubConfig';
-
-export const startDate = 1640995211000;
-
-export const endDate = 1641772811000;
+import { extensions, token } from '../../src/config/finnhubConfig';
+import { endDate, startDate } from './dateResources';
 
 const searchStartDate = startDate / 1000;
 
@@ -44,6 +41,10 @@ export const existingPrices = {
     open: priceList,
     high: priceList,
 };
+
+const stockData = {};
+stockData[symbol] = { prices: { ...existingPrices }, profile: { ...existingProfile } };
+export const existingStockData = stockData;
 
 export const sampleNoPricesResponse = { s: 'no_data' };
 

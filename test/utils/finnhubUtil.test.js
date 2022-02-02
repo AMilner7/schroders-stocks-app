@@ -3,7 +3,6 @@ import { getStockPrices, getStockProfile } from '../../src/utils/finnhubUtil';
 import Nock from 'nock';
 import { baseURL } from '../../src/config/finnhubConfig';
 import {
-    endDate,
     existingPrices,
     existingProfile,
     pricesSearchExtension,
@@ -11,9 +10,9 @@ import {
     sampleNoPricesResponse,
     samplePricesResponse,
     sampleProfileResponse,
-    startDate,
     symbol,
-} from './resources/finnhubResources';
+} from '../resources/finnhubResources';
+import { endDate, startDate } from '../resources/dateResources';
 axios.defaults.adapter = require('axios/lib/adapters/http');
 
 let scope;

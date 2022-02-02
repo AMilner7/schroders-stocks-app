@@ -67,8 +67,6 @@ export default function SearchStock(props) {
         if (!stockProfile) {
             toast(noStockProfileMessage);
         } else {
-            const newStockData = { ...props.stockData };
-            newStockData[symbol] = { profile: { ...stockProfile }, prices: {} };
             return updateStockPrices(symbol, stockProfile);
         }
     }

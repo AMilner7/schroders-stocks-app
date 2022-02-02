@@ -1,5 +1,5 @@
 import { getDate, getSearchTime } from '../../src/utils/dateUtil';
-import { dateMap } from './resources/dateResources';
+import { dateMap } from '../resources/dateResources';
 
 describe('dateUtil.getDate', () => {
     test.each(dateMap)('Should return correct date format for UNIX stamp', (date) => {
