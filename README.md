@@ -60,3 +60,25 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 - When users commit new changes, `lint:fix` will run.
 - Users cannot push commits unless `test:ci` passes
 
+### Repo
+
+```
+public/             #includes manifest and index.html
+src/
+  |--components/    #component library
+  |--config/        #hard-coded values for display, styles, etc
+  |--utils/         #re-usable functions
+  App.js
+  index.css
+  index.js
+test/               #test folder for src
+  |--components/
+  |--resources/     #test resources for mocking and hard-coded values
+  |--utils/
+  setupTests.js     #init file for jest
+.eslintrc.js
+.gitignore
+package-lock.json
+package.json
+README.md
+```
