@@ -14,6 +14,7 @@ export default function App() {
     const [stockData, setStockData] = useState({});
     const [selectedStocks, setSelectedStocks] = useState(new Set());
     const [priceType, setPriceType] = useState('close');
+    const [movingAvgDays] = useState(3);
 
     return (
         <div>
@@ -59,6 +60,7 @@ export default function App() {
                 </Grid>
                 <Box sx={{ marginTop: '10px', width: '90%', height: '100%' }}>
                     <StockGraph
+                        movingAvgDays={movingAvgDays}
                         stockData={stockData}
                         selectedStocks={selectedStocks}
                         priceType={priceType}

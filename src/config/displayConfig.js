@@ -1,4 +1,4 @@
-import { darkBlue, green, grey, red } from './styleConfig';
+import { darkBlue, darkGreen, darkRed, green, grey, lightBlue, red } from './styleConfig';
 
 export const defaultSearchTitle = 'Search for Stock';
 
@@ -58,16 +58,16 @@ export const chartOptions = {
 
 export const lineColors = [
     {
-        line: red,
-        border: red,
+        line: [red, darkRed],
+        border: [red, darkRed],
     },
     {
-        line: green,
-        border: green,
+        line: [green, darkGreen],
+        border: [green, darkGreen],
     },
     {
-        line: darkBlue,
-        border: darkBlue,
+        line: [lightBlue, darkBlue],
+        border: [lightBlue, darkBlue],
     },
 ];
 

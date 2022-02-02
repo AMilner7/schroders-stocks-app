@@ -1,6 +1,10 @@
 export const red = '#e81005';
 
+export const darkRed = '#800a01';
+
 export const green = '#32a852';
+
+export const darkGreen = '#026110';
 
 export const grey = '#d5e6ed';
 

@@ -20,6 +20,7 @@ import {
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { centerAlignment, greyBox } from '../config/styleConfig';
+import { getMovingAvgPrices } from '../utils/priceUtil';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -45,16 +46,28 @@ export default function StockGraph(props) {
          * @returns Datasets to display.
          */
         function getDataSets() {
-            return [...props.selectedStocks].map((symbol, i) => {
+            return [...props.selectedStocks].reduce((previousSymbol, symbol, i) => {
                 const stock = props.stockData[symbol];
                 const color = lineColors[i];
-                return {
-                    data: stock.prices[props.priceType],
-                    borderColor: color.border,
-                    backgroundColor: color.line,
-                    label: `${stock.profile.name} (${symbol})`,
-                };
-            });
+                return [
+                    ...previousSymbol,
+                    {
+                        data: stock.prices[props.priceType],
+                        borderColor: color.border[0],
+                        backgroundColor: color.line[0],
+                        label: `${stock.profile.name} (${symbol})`,
+                    },
+                    {
+                        data: getMovingAvgPrices(
+                            props.movingAvgDays,
+                            stock.prices[props.priceType]
+                        ),
+                        borderColor: color.border[1],
+                        backgroundColor: color.line[1],
+                        label: `${stock.profile.name} (${symbol}) - ${props.movingAvgDays} MAVG`,
+                    },
+                ];
+            }, []);
         }
         if (props.selectedStocks.size) {
             setData({ labels: getLabels(), datasets: getDataSets() });
