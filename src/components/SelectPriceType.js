@@ -6,8 +6,7 @@ import { buttonDefaults, green, lightBlue } from '../config/styleConfig';
 import { TextField } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 import { movingAvgPrompt } from '../config/displayConfig';
-import { getDayRange } from '../utils/dateUtil';
-import { mavgCannotBeZeroMessage, mavgNotValidMessage } from '../config/messageConfig';
+import { mavgCannotBeZeroMessage } from '../config/messageConfig';
 
 export default function SelectPriceType(props) {
     const [currentPrice, setCurrentPrice] = useState(props.priceType);
@@ -26,10 +25,7 @@ export default function SelectPriceType(props) {
      * @param {KeyboardEvent} event - User input
      */
     function handleChange(event) {
-        const dayRange = getDayRange(props.startDate, props.endDate);
-        if (dayRange < event.target.value) {
-            toast(mavgNotValidMessage);
-        } else if (event.target.value <= 0) {
+        if (event.target.value <= 0) {
             toast(mavgCannotBeZeroMessage);
         } else {
             props.setMovingAvgDays(event.target.value);
