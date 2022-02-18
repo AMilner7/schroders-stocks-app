@@ -81,12 +81,12 @@ afterEach(() => jest.clearAllMocks());
 
 describe('SearchStock.checkValidations', () => {
     afterEach(() => expect(getSearchButton()).toBeDisabled());
-    test('Should not be able to search for empty input', async () => {
+    test('Should not be able to search for empty input', () => {
         const { getByTestId } = render(getScreenElement(defaultProps));
         pressEnter(getByTestId);
         expect(toastCalls).toContain(noValueToSearch);
     });
-    test('Should not be able to search for non-word symbols', async () => {
+    test('Should not be able to search for non-word symbols', () => {
         const { getByText, getByTestId } = render(getScreenElement(defaultProps));
         setInputText(getByTestId, 'A*');
         expect(getByText(onlyWordCharactersMessage)).toBeTruthy();
@@ -144,7 +144,7 @@ describe('SearchStock.useEffect', () => {
         rerender(getScreenElement(props));
         expect(finnhubUtil.getStockPrices).not.toHaveBeenCalled();
     });
-    test('Should update stockData when user has selected stocks', async () => {
+    test('Should update stockData when user has selected stocks', () => {
         finnhubUtil.getStockPrices.mockReturnValueOnce(existingPrices);
         const props = { ...defaultProps };
         const { rerender } = render(getScreenElement(props));
@@ -154,7 +154,7 @@ describe('SearchStock.useEffect', () => {
         rerender(getScreenElement(props));
         expect(finnhubUtil.getStockPrices).toHaveBeenCalled();
     });
-    test('Should not update stockData when selected stocks have data for date range', async () => {
+    test('Should not update stockData when selected stocks have data for date range', () => {
         const props = { ...defaultProps };
         const { rerender } = render(getScreenElement(props));
         props.selectedStocks.add(symbol);

@@ -1,6 +1,10 @@
+export const freezeDate = '03/01/2022';
+
 export const startDate = 1640995211000;
 
 export const endDate = 1641772811000;
+
+export const dateInFuture = '12/01/2022';
 
 export const newStartDate = 1640995211900;
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SearchStock from './components/SearchStock';
-import DateSelectTile from './components/SelectDateRange';
+import SelectDateRange from './components/SelectDateRange';
 import StockTable from './components/StockTable';
 import StockGraph from './components/StockGraph';
 import SelectPriceType from './components/SelectPriceType';
@@ -38,7 +38,7 @@ export default function App() {
                             />
                         </Box>
                         <Box sx={{ height: '67%', width: '100%' }}>
-                            <DateSelectTile
+                            <SelectDateRange
                                 startDate={startDate}
                                 endDate={endDate}
                                 setEndDate={setEndDate}

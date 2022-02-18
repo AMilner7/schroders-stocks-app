@@ -11,7 +11,7 @@ import {
     invalidStartDateMessage,
 } from '../config/messageConfig';
 
-export default function DateSelectTile(props) {
+export default function SelectDateRange(props) {
     /**
      * Validates start date.
      * @param {Date} newDate - User selected date
@@ -52,6 +52,8 @@ export default function DateSelectTile(props) {
                         value={props.startDate}
                         onChange={handleStartDate}
                         renderInput={(params) => <TextField {...params} />}
+                        id="start-date"
+                        InputProps={{ 'data-testid': 'start-date' }}
                     />
                     <DesktopDatePicker
                         label="End Date"
@@ -59,6 +61,8 @@ export default function DateSelectTile(props) {
                         value={props.endDate}
                         onChange={handleEndDate}
                         renderInput={(params) => <TextField {...params} />}
+                        id="end-date"
+                        data-testid="end-date"
                     />
                 </Stack>
             </LocalizationProvider>
